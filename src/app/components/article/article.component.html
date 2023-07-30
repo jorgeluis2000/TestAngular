@@ -1,0 +1,21 @@
+
+<section id="content">
+    <article class="article-item article-detail" style="height: 100%;">
+        <div class="image-wrap" >
+            <img src="{{ url + 'get-image/' + article.image }}" alt="{{ article.title }}" *ngIf="article.image">
+            <img src="assets/images/default.png" alt="{{ article.title }}" *ngIf="!article.image" style="height: 400px">
+        </div>
+        <h1 class="subheader">{{ article.title }}</h1>
+        <span class="data">
+            {{ article.date | amLocale: 'es' | amTimeAgo }}
+        </span>
+        <p>
+            {{article.content}}
+        </p>
+        
+    </article>
+    <a [routerLink]="['/blog/editar', article._id]" style="margin: -15px 10px;" class="btn btn-warning btn-shadown">Editar</a>
+    <a (click)="delete(article._id)" style="margin: -15px 10px;" class="btn btn-danger btn-shadown">Eliminar</a>
+    <div class="clearfix"></div>
+</section>
+<app-sidebar></app-sidebar>

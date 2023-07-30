@@ -1,0 +1,72 @@
+<div class="center">
+  <section id="content">
+    <h1 class="subheader">{{ txtTitle }}</h1>
+
+    <form class="mid-form" #articleForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="title">Titulo</label>
+        <input
+          type="text"
+          name="title"
+          #title="ngModel"
+          [(ngModel)]="article.title"
+          required
+          pattern="[A-z\u00C0-\u017F ]{1,500}"
+        />
+        <small *ngIf="!title.valid && title.touched">
+          El titulo no es valido.
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="content">Biografia</label>
+        <textarea
+          name="biografia"
+          cols="30"
+          rows="10"
+          #content="ngModel"
+          [(ngModel)]="article.content"
+          required
+          pattern="[A-z0-9\u00C0-\u017F\n \.\,\:\;\#\/]{1,}"
+        ></textarea>
+        <small *ngIf="!content.valid && content.touched">
+          Caracteres no validos.
+        </small>
+      </div>
+      <div class="form-group mg-y-xxl">
+        <div class="image-tumb" *ngIf="is_edit">
+          <img
+            src="{{ url + 'get-image/' + article.image }}"
+            alt="{{ article.title }}"
+            *ngIf="article.image"
+          />
+          <img
+            src="assets/images/default.png"
+            alt="{{ article.title }}"
+            *ngIf="!article.image"
+          />
+          <p>{{ article.image }}</p>
+        </div>
+
+        <angular-file-uploader
+          [config]="afuConfig"
+          (ApiResponse)="imageUpload($event)"
+        >
+        </angular-file-uploader>
+      </div>
+      <div class="clearfix"></div>
+      <input
+        type="submit"
+        value="Guardar"
+        class="btn btn-success"
+        [disabled]="articleForm.invalid"
+      />
+      <input
+        type="button"
+        value="Cancelar"
+        class="btn btn-danger mg-sm"
+        [routerLink]="['/blog/article', article._id]"
+      />
+    </form>
+  </section>
+  <app-sidebar></app-sidebar>
+</div>

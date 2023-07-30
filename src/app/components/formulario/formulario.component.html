@@ -1,0 +1,114 @@
+<app-slider [nombre]="title" [size]="'small'"></app-slider>
+
+<div class="center">
+  <section id="content">
+    <h1 class="subheader">{{ title }}</h1>
+    <!--
+        <div id="datos-al-vuelo" *ngIf="user.nombre">
+            <ul>
+                <li>
+                    {{ user.nombre | uppercase}}
+                </li>
+                <li>
+                    {{ user.apellidos | uppercase}}
+                </li>
+                <li>
+                    {{ user.bio }}
+                </li>
+                <li>
+                    {{ user.genero }}
+                </li>
+            </ul>
+        </div>
+-->
+    <form class="mid-form" #userForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input
+          type="text"
+          name="nombre"
+          #nombre="ngModel"
+          [(ngModel)]="user.nombre"
+          required
+          pattern="[A-z\u00C0-\u017F ]{1,500}"
+        />
+        <small *ngIf="!nombre.valid && nombre.touched">
+          El nombre no es valido.
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="apellidos">Apellidos</label>
+        <input
+          type="text"
+          name="apellidos"
+          #apellidos="ngModel"
+          [(ngModel)]="user.apellidos"
+          required
+          pattern="[A-z\u00C0-\u017F ]{1,500}"
+        />
+        <small *ngIf="!apellidos.valid && apellidos.touched">
+          El apellido no es valido.
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="biografia">Biografia</label>
+        <textarea
+          name="biografia"
+          cols="30"
+          rows="10"
+          #bio="ngModel"
+          [(ngModel)]="user.bio"
+          required
+          pattern="[A-z0-9\u00C0-\u017F\n \.\,\:\;\#\/]{1,}"
+        ></textarea>
+        <small *ngIf="!bio.valid && bio.touched">
+          Caracteres no validos.
+        </small>
+      </div>
+      <div class="form-group raddionsbuttons">
+        <label class="content-radio"
+          ><input
+            type="radio"
+            name="genero"
+            value="hombre"
+            #genero="ngModel"
+            [(ngModel)]="user.genero"
+            required
+          />
+          hombre</label
+        >
+        <label class="content-radio"
+          ><input
+            type="radio"
+            name="genero"
+            value="mujer"
+            #genero="ngModel"
+            [(ngModel)]="user.genero"
+          />
+          mujer</label
+        >
+        <label class="content-radio"
+          ><input
+            type="radio"
+            name="genero"
+            value="Otro"
+            #genero="ngModel"
+            [(ngModel)]="user.genero"
+          />
+          Otro</label
+        >
+        <small *ngIf="!genero.valid && genero.touched">
+          El genero no es valido.
+        </small>
+      </div>
+      <div class="clearfix"></div>
+      <input
+        type="submit"
+        value="Enviar"
+        class="btn btn-success"
+        [disabled]="userForm.invalid"
+      />
+    </form>
+  </section>
+  <app-sidebar></app-sidebar>
+</div>
